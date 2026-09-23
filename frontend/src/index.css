@@ -1,0 +1,126 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #f1f5f9;
+  color: #1f2937;
+}
+
+.container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 0 16px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 1.6rem;
+}
+
+.dashboard {
+  background: white;
+  padding: 20px 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.topbar h2 {
+  margin: 0;
+}
+
+button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  margin: 6px 6px 6px 0;
+}
+
+button:hover {
+  background: #1d4ed8;
+}
+
+button.secondary {
+  background: #6b7280;
+}
+
+button.secondary:hover {
+  background: #4b5563;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.status-running { color: green; }
+.status-stopped { color: #d97706; }
+.status-reached-school { color: #2563eb; }
+.status-not-started { color: #6b7280; }
+
+.error {
+  background: #fee2e2;
+  color: #b91c1c;
+  padding: 10px 12px;
+  border-radius: 6px;
+}
+
+ul {
+  padding-left: 20px;
+}
+
+li {
+  margin-bottom: 8px;
+}
+
+/* Login / Signup */
+.auth-container {
+  width: 90%;
+  max-width: 420px;
+  margin: 40px auto;
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.auth-container h2 {
+  text-align: center;
+}
+
+.auth-container label {
+  display: block;
+  margin-top: 12px;
+  font-weight: bold;
+}
+
+.auth-container input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+}
+
+.auth-container button {
+  width: 100%;
+  margin: 18px 0 0 0;
+}
+
+.auth-container a {
+  color: #2563eb;
+}
