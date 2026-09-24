@@ -27,10 +27,16 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,
-                                     @NonNull HttpServletResponse response,
-                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
+                                   @NonNull HttpServletResponse response,
+                                   @NonNull FilterChain filterChain) throws ServletException, IOException {
 
-        String path = request.getServletPath();
+        // Bypass CORS preflight OPTIONS requests automatically
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        String path = request.getRequestURI();
 
         // Public endpoints pass through without a token
         if (path.equals("/api/health")
