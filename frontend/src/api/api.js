@@ -1,7 +1,10 @@
 import axios from 'axios';
 
+// Fallback path-oda சேர்த்து baseURL-ai safe-ah define panrom
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: API_URL,
 });
 
 // Every request-oda saved token-a automatic-a attach pannum
