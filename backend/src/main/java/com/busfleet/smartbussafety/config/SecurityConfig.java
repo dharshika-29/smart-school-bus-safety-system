@@ -42,7 +42,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // Public
                         .requestMatchers("/api/health").permitAll()
-                        .requestMatchers("/api/auth/signup", "/api/auth/login").permitAll()
+                        .requestMatchers("/api/auth/**").permitAll() // <-- Ellaa auth endpoints-um permitAll aagum
                         // Bus device updates use their own x-device-key check, not JWT
                         .requestMatchers(HttpMethod.PUT, "/api/bus/*/location").permitAll()
                         // Everything else under /api needs a valid JWT
