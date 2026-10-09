@@ -27,8 +27,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,
-                                   @NonNull HttpServletResponse response,
-                                   @NonNull FilterChain filterChain) throws ServletException, IOException {
+                                    @NonNull HttpServletResponse response,
+                                    @NonNull FilterChain filterChain) throws ServletException, IOException {
 
         // Bypass CORS preflight OPTIONS requests automatically
         if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
@@ -38,10 +38,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         String path = request.getRequestURI();
 
-        // Public endpoints pass through without a token
-        if (path.equals("/api/health")
-                || path.equals("/api/auth/login")
-                || path.equals("/api/auth/signup")) {
+        // Public endpoints pass through without a token (using startsWith to cover all auth routes)
+        if (path.startsWith("/api/auth/") || path.equals("/api/health")) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -67,7 +65,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         if (SecurityContextHolder.getContext().getAuthentication() == null) {
             UsernamePasswordAuthenticationToken authToken =
-                    new UsernamePasswordAuthenticationToken(userId, null, Collections.emptyList());
+                    new UsernamePassworsdAuthenticationToken(userId, null, Collections.emptyList());
             SecurityContextHolder.getContext().setAuthentication(authToken);
         }
 
