@@ -3,20 +3,34 @@ import { createContext, useContext, useState } from 'react';
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  const [token, setToken] = useState(localStorage.getItem('token'));
+  const [token, setToken] = useState(() => localStorage.getItem('token'));
   const [user, setUser] = useState(() => {
     try {
-      return JSON.parse(localStorage.getItem('user'));
+      const storedUser = localStorage.getItem('user');
+      return storedUser ? JSON.parse(storedUser) : null;
     } catch {
       return null;
     }
   });
 
   const login = (data) => {
-    localStorage.setItem('token', data.token);
-    localStorage.setItem('user', JSON.stringify(data.user));
-    setToken(data.token);
-    setUser(data.user);
+    if (!data) return;
+
+    // Backend-la irundhu token entha key-la vandhalum catch pannanum
+    const jwtToken = data.token || data.jwt || data.accessToken || (typeof data === 'string' ? data : null);
+    
+    // User object-ai extraction pannudhal
+    const userData = data.user || (data.email ? data : null);
+
+    if (jwtToken) {
+      localStorage.setItem('token', jwtToken);
+      setToken(jwtToken);
+    }
+
+    if (userData) {
+      localStorage.setItem('user', JSON.stringify(userData));
+      setUser(userData);
+    }
   };
 
   const logout = () => {
