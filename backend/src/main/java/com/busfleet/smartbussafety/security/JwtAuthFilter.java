@@ -28,8 +28,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(@NonNull HttpServletRequest request) throws ServletException {
         String path = request.getRequestURI();
-        // Skip JWT filter completely for auth routes and health check
-        return path.startsWith("/api/auth/") || path.equals("/api/health");
+        // Skip JWT filter completely for any auth routes and health check
+        return path.contains("/auth/") || path.equals("/api/health");
     }
 
     @Override
@@ -37,8 +37,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
 
-        // Bypass CORS preflight OPTIONS requests automatically
-        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+        // Double safety: Bypass CORS preflight and any Auth/Health endpoints immediately
+        String path = request.getRequestURI();
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod()) || path.contains("/auth/") || path.equals("/api/health")) {
             filterChain.doFilter(request, response);
             return;
         }
